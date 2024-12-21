@@ -1,15 +1,47 @@
+import React, { useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import AuthProvider, { AuthContext } from "./contexts/AuthContext"; // Corrected import
+import PublicHomepage from "./pages/publicHomePage";
+import UserHomepage from "./pages/userHomePage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import PublicNavbar from "./components/PublicNavbar";
+import UserNavbar from "./components/UserNavbar";
 
-
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1 className="text-4xl font-bold text-blue-500">
-        Welcome to SwapSkill
-      </h1>
-    </div>
-    
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
-}
+};
+
+const AppContent = () => {
+  const { user, loading } = useContext(AuthContext);
+
+  // Use effect does not need to handle navigation. It's better to handle navigation inside the Routes.
+  if (loading) return <div>Loading...</div>;
+
+  return (
+    <>
+      {user ? <UserNavbar /> : <PublicNavbar />}
+      <Routes>
+        {!user ? (
+          <>
+            <Route path="/" element={<PublicHomepage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<UserHomepage />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
+        )}
+      </Routes>
+    </>
+  );
+};
 
 export default App;
