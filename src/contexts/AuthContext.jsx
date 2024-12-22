@@ -1,64 +1,64 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true); // Add loading state
+    const navigate = useNavigate();
 
-  const fetchUser = async () => {
-    try {
-      const response = await axios.get("auth/user-info");
-      setUser(response.data.user);
-    } catch (err) {
-      console.error("Failed to fetch user info:", err.message);
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const fetchUser = async () => {
+        try {
+          const response = await axios.get("auth/user-info");
+          if (response.data?.user) {
+            setUser(response.data.user);
+            Cookies.set("user", JSON.stringify(response.data.user), { expires: 7 });
+          }
+        } catch (err) {
+          console.error("Error fetching user:", err.message);
+          setUser(null);
+        } finally {
+          setLoading(false);
+        }
+      };
 
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
-    navigate('/user-home'); 
-    window.location.reload();
-  };
+      const login = (userData) => {
+        if (!userData) return;
+        setUser(userData);
+        Cookies.set("user", JSON.stringify(userData), { expires: 7 });
+        navigate("/"); // Redirect after successful login
+      };
+      
 
-  const logout = async () => {
-    try {
-      await axios.post("auth/logout");
-      setUser(null);
-      localStorage.removeItem("user");
-      navigate("/login");
-    } catch (err) {
-      console.error("Logout failed:", err.message);
-    }
-  };
+    const logout = async () => {
+        try {
+            await axios.post("auth/logout");
+            setUser(null);
+            Cookies.remove("user");
+            navigate("/login");
+        } catch (err) {
+            console.error("Logout failed:", err.message);
+        }
+    };
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-        localStorage.removeItem("user");
-      }
-    } else {
-      fetchUser();
-    }
-    setLoading(false);
-  }, []); 
+    useEffect(() => {
+        const storedUser = Cookies.get("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+            setLoading(false); // No need to fetch user if already stored
+        } else {
+            fetchUser();
+        }
+    }, []);
 
-  return (
-    <AuthContext.Provider value={{ user, setUser, logout, loading, login }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ user, setUser, loading, login, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export default AuthProvider;

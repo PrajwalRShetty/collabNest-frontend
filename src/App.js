@@ -1,12 +1,15 @@
 import React, { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import AuthProvider, { AuthContext } from "./contexts/AuthContext"; // Corrected import
+import AuthProvider, { AuthContext } from "./contexts/AuthContext";
 import PublicHomepage from "./pages/publicHomePage";
 import UserHomepage from "./pages/userHomePage";
+import ConnectPage from "./pages/connectPage";
+import ProfilePage from "./pages/profilePage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PublicNavbar from "./components/PublicNavbar";
 import UserNavbar from "./components/UserNavbar";
+
 
 const App = () => {
   return (
@@ -37,6 +40,8 @@ const AppContent = () => {
           <>
             <Route path="/" element={<UserHomepage />} />
             <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/connect" element={<ConnectPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </>
         )}
       </Routes>

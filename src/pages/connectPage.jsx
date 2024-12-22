@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 
 const ConnectPage = () => {
-  const [students, setStudents] = useState([]); // Student list
-  const [searchName, setSearchName] = useState(""); // Search input
-  const [selectedSkills, setSelectedSkills] = useState([]); // Selected filters
-  const [skills, setSkills] = useState([]); // Available skills from backend
+  const [students, setStudents] = useState([]); 
+  const [searchName, setSearchName] = useState(""); 
+  const [selectedSkills, setSelectedSkills] = useState([]); 
+  const [skills, setSkills] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [searchAttempted, setSearchAttempted] = useState(false);
 
@@ -13,7 +13,7 @@ const ConnectPage = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/v1/api/student/skills");
+        const response = await axios.get("/student/skills");
         setSkills(response.data);
       } catch (error) {
         console.error("Error fetching skills:", error);
@@ -34,7 +34,7 @@ const ConnectPage = () => {
       if (searchName) queryParams.append("name", searchName);
       if (selectedSkills.length > 0) queryParams.append("skills", JSON.stringify(selectedSkills));
 
-      const response = await axios.get(`http://localhost:5000/v1/api/student/search?${queryParams.toString()}`);
+      const response = await axios.get(`/student/search?${queryParams.toString()}`);
       setStudents(response.data);
     } catch (error) {
       console.error("Error fetching students:", error);

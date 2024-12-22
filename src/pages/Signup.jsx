@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -9,13 +10,14 @@ const Signup = () => {
   const [role, setRole] = useState("student");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { signup} = useContext(AuthContext);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/signup", { name, email, password, role });
-      console.log(response.data.message);
-      navigate("/login");
+      const response = await axios.post("/auth/signup", { name, email, password, role });
+      signup(response.data.user);
+      
     } catch (err) {
       setError("User already exists or error occurred");
     }

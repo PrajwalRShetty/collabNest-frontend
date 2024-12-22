@@ -15,10 +15,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post("/auth/login", { email, password, role });
-      console.log(response.data.message);
-      login(response.data.user); // Trigger login and redirect to the homepage
+      login(response.data.user); 
     } catch (err) {
       setError("Invalid credentials");
+      console.log(err);
     }
   };
 

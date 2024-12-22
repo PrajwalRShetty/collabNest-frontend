@@ -5,9 +5,9 @@ import { AuthContext } from "../contexts/AuthContext";
 const UserNavbar = () => {
   const { user, logout } = useContext(AuthContext);
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
-  const [isNavDropdownOpen, setIsNavDropdownOpen] = useState(false); 
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 550); 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNavDropdownOpen, setIsNavDropdownOpen] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 550);
 
   useEffect(() => {
     const handleResize = () => {
@@ -19,7 +19,7 @@ const UserNavbar = () => {
   }, []);
 
   return (
-    <nav className="bg-blue-500 shadow-md px-2 py-2 flex items-center justify-between m-4 rounded-lg">
+    <nav className="bg-blue-500 shadow-md px-2 py-2 flex items-center justify-between m-4 rounded-lg sticky top-0 z-50">
       {/* Left Section - Logo */}
       <div className="flex items-center space-x-2">
         <img
@@ -84,7 +84,9 @@ const UserNavbar = () => {
               <NavLink
                 to="/home"
                 className={({ isActive }) =>
-                  isActive ? "block px-4 py-2 text-blue-500 bg-gray-200" : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
+                  isActive
+                    ? "block px-4 py-2 text-blue-500 bg-gray-200"
+                    : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
                 }
               >
                 Home
@@ -92,7 +94,9 @@ const UserNavbar = () => {
               <NavLink
                 to="/projects"
                 className={({ isActive }) =>
-                  isActive ? "block px-4 py-2 text-blue-500 bg-gray-200" : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
+                  isActive
+                    ? "block px-4 py-2 text-blue-500 bg-gray-200"
+                    : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
                 }
               >
                 Projects
@@ -100,7 +104,9 @@ const UserNavbar = () => {
               <NavLink
                 to="/connect"
                 className={({ isActive }) =>
-                  isActive ? "block px-4 py-2 text-blue-500 bg-gray-200" : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
+                  isActive
+                    ? "block px-4 py-2 text-blue-500 bg-gray-200"
+                    : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
                 }
               >
                 Connect
@@ -108,7 +114,9 @@ const UserNavbar = () => {
               <NavLink
                 to="/eduReels"
                 className={({ isActive }) =>
-                  isActive ? "block px-4 py-2 text-blue-500 bg-gray-200" : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
+                  isActive
+                    ? "block px-4 py-2 text-blue-500 bg-gray-200"
+                    : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
                 }
               >
                 EduReels
@@ -136,7 +144,9 @@ const UserNavbar = () => {
             <NavLink
               to="/profile"
               className={({ isActive }) =>
-                isActive ? "block px-4 py-2 text-blue-500 bg-gray-200" : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
+                isActive
+                  ? "block px-4 py-2 text-blue-500 bg-gray-200"
+                  : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
               }
             >
               Profile
@@ -144,7 +154,9 @@ const UserNavbar = () => {
             <NavLink
               to="/dashboard"
               className={({ isActive }) =>
-                isActive ? "block px-4 py-2 text-blue-500 bg-gray-200" : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
+                isActive
+                  ? "block px-4 py-2 text-blue-500 bg-gray-200"
+                  : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
               }
             >
               Dashboard
@@ -152,7 +164,9 @@ const UserNavbar = () => {
             <NavLink
               to="/settings"
               className={({ isActive }) =>
-                isActive ? "block px-4 py-2 text-blue-500 bg-gray-200" : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
+                isActive
+                  ? "block px-4 py-2 text-blue-500 bg-gray-200"
+                  : "block px-4 py-2 text-blue-500 hover:bg-gray-100"
               }
             >
               Settings

@@ -6,23 +6,25 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        await instance.post("/refresh-token");
-        return instance(originalRequest); 
-      } catch (err) {
-        console.error("Token refresh failed:", err.message);
-        return Promise.reject(err);
+    (response) => response,
+    async (error) => {
+      const originalRequest = error.config;
+  
+      if (error.response && error.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+  
+        try {
+          await instance.post("auth/refresh-token"); 
+          console.log("Token refreshed successfully");
+          return instance(originalRequest); 
+        } catch (err) {
+          console.error("Token refresh failed:", err.message);
+          return Promise.reject(err);
+        }
       }
+  
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  }
-);
-
-export default instance;
-
+  );
+  
+export default instance;
