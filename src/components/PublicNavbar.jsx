@@ -6,10 +6,17 @@ const PublicNavbar = () => {
 
   return (
     
-    <nav className="bg-blue-500 px-4 py-2 flex justify-between items-center">
-      <div className="text-white font-bold">SwapSkill</div>
+    <nav className="bg-black px-4 py-3 flex justify-between items-center">
+     <div className="flex items-center space-x-2">
+        <img
+          src="https://via.placeholder.com/40"
+          alt="App Logo"
+          className="w-8 h-8 object-cover rounded-full"
+        />
+      <div className="text-white font-bold ">SwapSkill</div>
+      </div>
       <button
-        className="bg-white text-blue-500 px-4 py-2 rounded"
+        className="bg-orange-800 text-white px-4 py-2 rounded"
         onClick={() => navigate("/login")}
       >
         Login

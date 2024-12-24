@@ -14,11 +14,10 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/auth/login", { email, password, role });
+      const response = await axios.post("/auth/login", { email, password, role },{ headers: { "No-Auth": true } });
       login(response.data.user); 
     } catch (err) {
       setError("Invalid credentials");
-      console.log(err);
     }
   };
 

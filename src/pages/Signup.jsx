@@ -15,7 +15,8 @@ const Signup = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/auth/signup", { name, email, password, role });
+      const response = await axios.post("/auth/signup", { name, email, password, role },{ headers: { "No-Auth": true } });
+      console.log("Signup successful:", response.data); 
       signup(response.data.user);
       
     } catch (err) {

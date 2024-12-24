@@ -29,7 +29,14 @@ export const AuthProvider = ({ children }) => {
         if (!userData) return;
         setUser(userData);
         Cookies.set("user", JSON.stringify(userData), { expires: 7 });
-        navigate("/"); // Redirect after successful login
+        navigate("/"); 
+      };
+
+      const signup = (userData) => {
+        if (!userData) return;
+        setUser(userData);
+        Cookies.set("user", JSON.stringify(userData), { expires: 7 });
+        navigate("/"); 
       };
       
 
@@ -48,14 +55,14 @@ export const AuthProvider = ({ children }) => {
         const storedUser = Cookies.get("user");
         if (storedUser) {
             setUser(JSON.parse(storedUser));
-            setLoading(false); // No need to fetch user if already stored
+            setLoading(false);
         } else {
             fetchUser();
         }
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, setUser, loading, login, logout }}>
+        <AuthContext.Provider value={{ user, setUser, loading, login, logout,signup }}>
             {children}
         </AuthContext.Provider>
     );

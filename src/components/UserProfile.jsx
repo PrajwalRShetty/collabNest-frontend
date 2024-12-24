@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import ContactInfo from "./ContactInfo"; // Ensure this is the correct import for your ContactInfo component
 
 const UserProfile = ({ profile, updateProfile }) => {
+  const imageUrl = React.useMemo(() => {
+    return profile.backgroundImage
+      ? `${profile.backgroundImage}?t=${Date.now()}`
+      : "https://via.placeholder.com/800x200";
+  }, [profile.backgroundImage]);
+  
+
   const [modalView, setModalView] = useState(null); // Tracks which modal is open (basic-info/contact-info/background-image)
   const [formData, setFormData] = useState({
     name: profile.name || "",
@@ -21,7 +28,7 @@ const UserProfile = ({ profile, updateProfile }) => {
       location: profile.location || "",
       contactInfo: profile.contactInfo || {},
       backgroundImage: profile.backgroundImage || "",
-    });
+    });console.log("Profile updated:", profile)
   }, [profile]);
 
   // Handle basic info changes
@@ -45,28 +52,24 @@ const UserProfile = ({ profile, updateProfile }) => {
       },
     };
 
-    updateProfile(updateData); // Call the parent function to update profile
-    setModalView(null); // Close the modal after submission
+    updateProfile(updateData); 
+    setModalView(null); 
   };
 
-  // Handle background image change
   const handleBackgroundImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const updateData = {
-          section: "background-image",
-          data: {
-            backgroundImage: reader.result, // Base64-encoded image
-          },
-        };
-        updateProfile(updateData);
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append("backgroundImage", file);
+      formData.append("section", "background-image"); // Add section directly to FormData
+  
+      // Send the FormData directly
+      updateProfile(formData);
     }
-    setModalView(null); // Close the modal after submission
+    setModalView(null);
   };
+  
+  
 
   // Update contact info
   const updateContactInfo = (newContactInfo) => {
@@ -93,10 +96,10 @@ const UserProfile = ({ profile, updateProfile }) => {
       <div className="relative bg-white rounded shadow">
         {/* Background Image */}
         <div
-          className="h-24 bg-cover bg-center rounded-t"
-          style={{
-            backgroundImage: `url('${formData.backgroundImage || "https://via.placeholder.com/800x200"}')`,
-          }}
+            className="h-24 bg-cover bg-center rounded-t"
+            style={{
+              backgroundImage: `url('${imageUrl}')`,
+            }}
         >
           <button
             className="absolute top-2 right-2 bg-gray-500 text-white p-1 rounded-full shadow hover:bg-gray-600 z-10"
@@ -117,7 +120,6 @@ const UserProfile = ({ profile, updateProfile }) => {
         <button
           className="absolute top-[110px] right-4 bg-blue-500 text-white p-2 rounded-full shadow hover:bg-blue-600 z-10"
           onClick={() => {
-            console.log("Edit button clicked");
             setModalView("basic-info");
           }}
         >
