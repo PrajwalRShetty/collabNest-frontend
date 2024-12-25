@@ -6,6 +6,8 @@ import UserHomepage from "./pages/userHomePage";
 import ConnectPage from "./pages/connectPage";
 import StudentProfilePage from "./pages/studentProfilePage"; 
 import SponsorProfilePage from "./pages/sponsorProfilePage"; 
+import SponsorDashboard from "./pages/SponsorDashboard";
+import StudentProjects from "./pages/studentProjects";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PublicNavbar from "./components/PublicNavbar";
@@ -41,16 +43,22 @@ const AppContent = () => {
           <>
             {/* Routes for authenticated users */}
             <Route path="/" element={<UserHomepage />} />
-            <Route path="*" element={<Navigate to="/" />} />
             <Route path="/connect" element={<ConnectPage />} />
             
-            {/* Conditional route for profile page */}
-            <Route
-              path="/profile"
-              element={
-                user.role === "student" ? <StudentProfilePage /> : <SponsorProfilePage />
-              }
-            />
+            {/* Conditional routes based on user role */}
+            {user.role === "student" ? (
+              <>
+                <Route path="/profile" element={<StudentProfilePage />} />
+                <Route path="/projects" element={<StudentProjects />} />
+              </>
+            ) : (
+              <>
+                <Route path="/profile" element={<SponsorProfilePage />} />
+                <Route path="/dashboard" element={<SponsorDashboard />} />
+              </>
+            )}
+
+            <Route path="*" element={<Navigate to="/" />} />
           </>
         )}
       </Routes>

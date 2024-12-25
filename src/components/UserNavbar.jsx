@@ -41,6 +41,7 @@ const UserNavbar = () => {
           >
             Home
           </NavLink>
+          {user?.role === "student" && (
           <NavLink
             to="/projects"
             className={({ isActive }) =>
@@ -48,7 +49,7 @@ const UserNavbar = () => {
             }
           >
             Projects
-          </NavLink>
+          </NavLink>)}
           <NavLink
             to="/connect"
             className={({ isActive }) =>
@@ -65,6 +66,16 @@ const UserNavbar = () => {
               }
             >
               EduReels
+            </NavLink>
+          )}
+          {user?.role === "projectSponsor" && (
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) =>
+                isActive ? "text-orange-700 font-bold" : "text-white hover:text-orange-700"
+              }
+            >
+              Dashboard
             </NavLink>
           )}
         </div>
@@ -91,6 +102,7 @@ const UserNavbar = () => {
               >
                 Home
               </NavLink>
+              {user.role === 'student' && (
               <NavLink
                 to="/projects"
                 className={({ isActive }) =>
@@ -101,6 +113,7 @@ const UserNavbar = () => {
               >
                 Projects
               </NavLink>
+              )}
               <NavLink
                 to="/connect"
                 className={({ isActive }) =>
@@ -123,6 +136,17 @@ const UserNavbar = () => {
                 EduReels
               </NavLink>
               )}
+              {user.role === 'projectSponsor' && (
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  isActive
+                    ? "block px-4 py-2 text-orange-700 font-bold bg-gray-200"
+                    : "block px-4 py-2 text-white hover:text-orange-700 hover:bg-gray-100"
+                }
+              >
+                Dashboard
+              </NavLink>)}
             </div>
           )}
         </div>
@@ -153,7 +177,7 @@ const UserNavbar = () => {
             >
               Profile
             </NavLink>
-            <NavLink
+            {user.role === 'student' && (<NavLink
               to="/dashboard"
               className={({ isActive }) =>
                 isActive
@@ -162,7 +186,7 @@ const UserNavbar = () => {
               }
             >
               Dashboard
-            </NavLink>
+            </NavLink>)}
             <NavLink
               to="/settings"
               className={({ isActive }) =>
