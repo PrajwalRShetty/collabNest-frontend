@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const ContactInfo = ({ contactInfo, updateContactInfo, onClose }) => {
+  const { user } = useContext(AuthContext); 
   const [formData, setFormData] = useState(contactInfo || {});
   const [isEditing, setIsEditing] = useState(false);
 
@@ -9,20 +11,33 @@ const ContactInfo = ({ contactInfo, updateContactInfo, onClose }) => {
     setIsEditing(false); // Close editing mode
   };
 
+  const fieldsToDisplay =
+    user?.role === "student"
+      ? ["email", "phoneNo", "dob", "portfolio_link"]
+      : ["email", "phoneNo"];
+
   return (
     <div className="p-4 bg-white rounded shadow w-full max-w-lg mx-auto">
       <h2 className="text-xl font-bold mb-4">Contact Info</h2>
       {!isEditing ? (
         <div>
-          <p>Email: {formData.email || "N/A"}</p>
-          <p>Phone: {formData.phoneNo || "N/A"}</p>
-          <p>DOB: {formData.dob || "N/A"}</p>
-          <p>
-            Portfolio:{" "}
-            <a href={formData.portfolio_link} className="text-blue-500 underline">
-              {formData.portfolio_link || "N/A"}
-            </a>
-          </p>
+          {fieldsToDisplay.map((field) => (
+            <p key={field}>
+              {field.charAt(0).toUpperCase() + field.slice(1)}:{" "}
+              {formData[field] || "N/A"}
+            </p>
+          ))}
+          {user?.role === "student" && (
+            <p>
+              Portfolio:{" "}
+              <a
+                href={formData.portfolio_link}
+                className="text-blue-500 underline"
+              >
+                {formData.portfolio_link || "N/A"}
+              </a>
+            </p>
+          )}
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
             onClick={() => setIsEditing(true)}
@@ -38,7 +53,7 @@ const ContactInfo = ({ contactInfo, updateContactInfo, onClose }) => {
         </div>
       ) : (
         <div>
-          {["email", "phoneNo", "dob", "portfolio_link"].map((field) => (
+          {fieldsToDisplay.map((field) => (
             <input
               key={field}
               type="text"

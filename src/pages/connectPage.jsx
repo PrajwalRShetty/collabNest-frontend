@@ -9,7 +9,6 @@ const ConnectPage = () => {
   const [loading, setLoading] = useState(false);
   const [searchAttempted, setSearchAttempted] = useState(false);
 
-  // Fetch available skills
   useEffect(() => {
     const fetchSkills = async () => {
       try {
@@ -22,7 +21,6 @@ const ConnectPage = () => {
     fetchSkills();
   }, []);
 
-  // Fetch students based on search or filter
   const fetchStudents = async () => {
     if (!searchName.trim() && selectedSkills.length === 0) {
       return;
@@ -43,7 +41,6 @@ const ConnectPage = () => {
     }
   };
 
-  // Handle skill filter changes
   const handleSkillChange = (e) => {
     const { value } = e.target;
     setSelectedSkills((prev) =>
@@ -54,30 +51,32 @@ const ConnectPage = () => {
   return (
     <div className="container mx-auto p-4">
       {/* Top Section - Search Bar */}
-      <div className="flex items-center mb-6">
-        <input
-          type="text"
-          value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
-          placeholder="Search student"
-          className="border px-4 py-2 rounded-l-lg w-full"
-        />
-        <button
-          onClick={() => {
-            setSearchAttempted(true);
-            fetchStudents();
-          }}
-          className="bg-blue-500 text-white px-4 py-2 rounded-r-lg"
-        >
-          Search
-        </button>
+      <div className="flex justify-center mb-6">
+        <div className="flex w-2/3 max-w-lg">
+          <input
+            type="text"
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+            placeholder="Search student"
+            className="border px-4 py-2 rounded-l-lg w-full"
+          />
+          <button
+            onClick={() => {
+              setSearchAttempted(true);
+              fetchStudents();
+            }}
+            className="bg-blue-500 text-white px-4 py-2 rounded-r-lg"
+          >
+            Search
+          </button>
+        </div>
       </div>
-  
+
       {/* Main Section */}
       <div className="flex gap-4">
         {/* Left Sidebar - Filters */}
-        <div className="w-1/4 border rounded-lg p-4 h-fit">
-          <h2 className="text-lg font-bold mb-2">Skills</h2>
+        <div className="w-1/4 border rounded-lg p-4 h-fit bg-black text-white">
+          <h2 className="text-lg font-bold mb-2 text-orange-500">Skills</h2>
           <div className="flex flex-col gap-2">
             {skills.map((skill) => (
               <label key={skill} className="flex items-center">
@@ -99,7 +98,7 @@ const ConnectPage = () => {
             Add
           </button>
         </div>
-  
+
         {/* Students List */}
         <div className="w-3/4">
           {loading ? (
@@ -109,7 +108,7 @@ const ConnectPage = () => {
               {students.map((student) => (
                 <div
                   key={student._id}
-                  className="border rounded-lg p-4 shadow hover:shadow-md"
+                  className="border rounded-lg p-4 shadow hover:shadow-md bg-white"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <img

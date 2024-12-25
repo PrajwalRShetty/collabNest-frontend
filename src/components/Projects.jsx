@@ -1,77 +1,212 @@
 import React, { useState } from "react";
+import { PencilIcon, TrashIcon, PlusIcon } from "@heroicons/react/24/outline";
 
-const Projects = ({ projects, addProject }) => {
+const Projects = ({ projects, addProject, updateProject, deleteProject }) => {
   const [newProject, setNewProject] = useState({
     title: "",
     description: "",
-    skills_involved: "",
+    skills_involved: [""],
     github_link: "",
   });
-  const [isSaving, setIsSaving] = useState(false); // Loading state for saving a project
-  const [error, setError] = useState(null); // Error state for project submission
+  const [isAdding, setIsAdding] = useState(false);
+  const [editProject, setEditProject] = useState(null);
 
   const handleAddProject = async () => {
-    // Validate inputs
-    if (!newProject.title || !newProject.description || !newProject.github_link) {
-      setError("Title, description, and GitHub link are required.");
+    if (
+      !newProject.title.trim() ||
+      !newProject.description.trim() ||
+      !newProject.github_link.trim()
+    ) {
+      alert("All fields are required!");
       return;
     }
 
-    setError(null); // Clear previous errors
-    setIsSaving(true);
-
     try {
       await addProject(newProject);
-      setNewProject({ title: "", description: "", skills_involved: "", github_link: "" });
+      setNewProject({ title: "", description: "", skills_involved: [""], github_link: "" });
+      setIsAdding(false);
     } catch (error) {
-      setError("Error adding project. Please try again.");
-      console.error("Error adding project:", error);
-    } finally {
-      setIsSaving(false);
+      alert("Failed to add project. Please try again.");
+    }
+  };
+
+  const handleUpdateProject = async () => {
+    if (
+      !editProject.title.trim() ||
+      !editProject.description.trim() ||
+      !editProject.github_link.trim()
+    ) {
+      alert("All fields are required!");
+      return;
+    }
+
+    try {
+      await updateProject(editProject);
+      setEditProject(null);
+    } catch (error) {
+      alert("Failed to update project. Please try again.");
+    }
+  };
+
+  const handleDeleteProject = async (projectId) => {
+    if (window.confirm("Are you sure you want to delete this project?")) {
+      try {
+        await deleteProject(projectId);
+      } catch (error) {
+        alert("Failed to delete project. Please try again.");
+      }
     }
   };
 
   return (
-    <div className="p-4 bg-white rounded shadow">
+    <div className="p-4 bg-white rounded shadow w-full">
       <h2 className="text-xl font-bold">Projects</h2>
 
-      {/* List of projects */}
-      <ul>
+      {/* Project List */}
+      <div className="my-4 border rounded p-4">
         {projects.map((project, index) => (
-          <li key={index} className="my-2">
-            <h3 className="font-medium">{project.title}</h3>
-            <p>{project.description}</p>
-            <p>Skills: {project.skills_involved}</p>
-            <a href={project.github_link} className="text-blue-500" target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-          </li>
+          <div key={index} className="mb-4 border-b last:border-0 pb-2">
+            <div className="flex justify-between items-center">
+              <h3 className="font-medium text-lg">{project.title}</h3>
+              <div className="flex space-x-2">
+                <PencilIcon
+                  className="w-5 h-5 text-blue-500 cursor-pointer"
+                  onClick={() => setEditProject({ ...project })}
+                />
+                <TrashIcon
+                  className="w-5 h-5 text-red-500 cursor-pointer"
+                  onClick={() => handleDeleteProject(project._id)}
+                />
+              </div>
+            </div>
+            <p className="text-sm">{project.description}</p>
+            <p className="text-sm font-semibold">Skills Involved:</p>
+            <div className="flex flex-wrap gap-2">
+              {project.skills_involved.map((skill, idx) => (
+                <span key={idx} className="bg-gray-200 text-sm px-2 py-1 rounded shadow">
+                  {skill}
+                </span>
+              ))}
+            </div>
+            <p className="text-sm mt-2">
+              GitHub:{" "}
+              <a
+                href={project.github_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                {project.github_link}
+              </a>
+            </p>
+          </div>
         ))}
-      </ul>
-
-      {/* Error message */}
-      {error && <div className="text-red-500">{error}</div>}
-
-      {/* Form for adding a new project */}
-      <div className="mt-4">
-        {["title", "description", "skills_involved", "github_link"].map((field) => (
-          <input
-            key={field}
-            type="text"
-            placeholder={field}
-            className="border rounded p-2 w-full mb-2"
-            value={newProject[field]}
-            onChange={(e) => setNewProject({ ...newProject, [field]: e.target.value })}
-          />
-        ))}
-        <button
-          onClick={handleAddProject}
-          className="bg-purple-500 text-white px-4 py-2 rounded"
-          disabled={isSaving}
-        >
-          {isSaving ? "Saving..." : "Add Project"}
-        </button>
       </div>
+
+  
+      {/* Add or Edit Project Form */}
+      {isAdding || editProject ? (
+        <div className="mt-4 border rounded p-4">
+          <h3 className="font-bold text-lg mb-2">
+            {editProject ? "Edit Project" : "Add New Project"}
+          </h3>
+          <input
+            type="text"
+            placeholder="Title"
+            className="border rounded p-2 w-full mb-2"
+            value={editProject ? editProject.title : newProject.title}
+            onChange={(e) =>
+              editProject
+                ? setEditProject({ ...editProject, title: e.target.value })
+                : setNewProject({ ...newProject, title: e.target.value })
+            }
+          />
+          <textarea
+            placeholder="Description"
+            className="border rounded p-2 w-full mb-2"
+            value={editProject ? editProject.description : newProject.description}
+            onChange={(e) =>
+              editProject
+                ? setEditProject({ ...editProject, description: e.target.value })
+                : setNewProject({ ...newProject, description: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="GitHub Link"
+            className="border rounded p-2 w-full mb-2"
+            value={editProject ? editProject.github_link : newProject.github_link}
+            onChange={(e) =>
+              editProject
+                ? setEditProject({ ...editProject, github_link: e.target.value })
+                : setNewProject({ ...newProject, github_link: e.target.value })
+            }
+          />
+          <p className="font-semibold text-sm mb-2">Skills Involved:</p>
+          {(editProject ? editProject.skills_involved : newProject.skills_involved).map(
+            (skill, index) => (
+              <div key={index} className="flex items-center mb-2">
+                <input
+                  type="text"
+                  placeholder={`Skill ${index + 1}`}
+                  className="border rounded p-2 flex-1"
+                  value={skill}
+                  onChange={(e) => {
+                    const updatedSkills = editProject
+                      ? [...editProject.skills_involved]
+                      : [...newProject.skills_involved];
+                    updatedSkills[index] = e.target.value;
+                    editProject
+                      ? setEditProject({ ...editProject, skills_involved: updatedSkills })
+                      : setNewProject({ ...newProject, skills_involved: updatedSkills });
+                  }}
+                />
+              </div>
+            )
+          )}
+          <button
+            onClick={() => {
+              const updatedSkills = (editProject
+                ? editProject.skills_involved
+                : newProject.skills_involved
+              ).concat("");
+              editProject
+                ? setEditProject({ ...editProject, skills_involved: updatedSkills })
+                : setNewProject({ ...newProject, skills_involved: updatedSkills });
+            }}
+            className="bg-gray-200 text-black px-4 py-2 rounded mt-2"
+          >
+            Add Skill
+          </button>
+          <div className="flex space-x-2 mt-4">
+            <button
+              onClick={editProject ? handleUpdateProject : handleAddProject}
+              className="bg-green-500 text-white px-4 py-2 rounded"
+            >
+              {editProject ? "Update Project" : "Save Project"}
+            </button>
+            <button
+              onClick={() => {
+                setIsAdding(false);
+                setEditProject(null);
+              }}
+              className="bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button
+          onClick={() => setIsAdding(true)}
+          className="bg-blue-500 text-white px-4 py-2 rounded mt-2 flex items-center"
+        >
+          <PlusIcon className="w-5 h-5 mr-2" />
+          Add Project
+        </button>
+      )}
+
+    
     </div>
   );
 };

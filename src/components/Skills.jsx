@@ -108,8 +108,9 @@ const Skills = ({ skills, addSkill, deleteSkill, updateSkill }) => {
         ))}
       </div>
 
+ 
       {/* Add or Edit Skill Form */}
-      {isAdding || editSkill ? (
+        {isAdding || editSkill ? (
         <div className="mt-4 border rounded p-4">
           <h3 className="font-bold text-lg mb-2">
             {editSkill ? "Edit Skill" : "Add New Skill"}
@@ -149,10 +150,10 @@ const Skills = ({ skills, addSkill, deleteSkill, updateSkill }) => {
 
           <button
             onClick={() => {
-              if (newSkill.learningPath.length < 5) {
-                const newSteps = [...newSkill.learningPath, ""];
-                setNewSkill({ ...newSkill, learningPath: newSteps });
-              }
+              const updatedPath = (editSkill ? editSkill.learningPath : newSkill.learningPath).concat("");
+              editSkill
+                ? setEditSkill({ ...editSkill, learningPath: updatedPath })
+                : setNewSkill({ ...newSkill, learningPath: updatedPath });
             }}
             className="bg-gray-200 text-black px-4 py-2 rounded mt-2"
           >
@@ -182,24 +183,36 @@ const Skills = ({ skills, addSkill, deleteSkill, updateSkill }) => {
 
           <button
             onClick={() => {
-              if (newSkill.resources.length < 5) {
-                const newResources = [...newSkill.resources, ""];
-                setNewSkill({ ...newSkill, resources: newResources });
-              }
+              const updatedResources = (editSkill ? editSkill.resources : newSkill.resources).concat("");
+              editSkill
+                ? setEditSkill({ ...editSkill, resources: updatedResources })
+                : setNewSkill({ ...newSkill, resources: updatedResources });
             }}
             className="bg-gray-200 text-black px-4 py-2 rounded mt-2"
           >
             Add Resource
           </button>
 
-          <button
-            onClick={editSkill ? handleUpdateSkill : handleAddSkill}
-            className="bg-green-500 text-white px-4 py-2 rounded mt-2"
-          >
-            {editSkill ? "Update Skill" : "Save Skill"}
-          </button>
+          <div className="flex space-x-2 mt-4">
+            <button
+              onClick={editSkill ? handleUpdateSkill : handleAddSkill}
+              className="bg-green-500 text-white px-4 py-2 rounded"
+            >
+              {editSkill ? "Update Skill" : "Save Skill"}
+            </button>
+            <button
+              onClick={() => {
+                setIsAdding(false);
+                setEditSkill(null);
+                setNewSkill({ skillName: "", learningPath: ["", ""], resources: [""] });
+              }}
+              className="bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-      ) : (
+        ) : (
         <button
           onClick={() => setIsAdding(true)}
           className="bg-blue-500 text-white px-4 py-2 rounded mt-2 flex items-center"
@@ -207,7 +220,8 @@ const Skills = ({ skills, addSkill, deleteSkill, updateSkill }) => {
           <PlusIcon className="w-5 h-5 mr-2" />
           Add Skill
         </button>
-      )}
+        )}
+
     </div>
   );
 };

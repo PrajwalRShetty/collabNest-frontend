@@ -4,12 +4,12 @@ import AuthProvider, { AuthContext } from "./contexts/AuthContext";
 import PublicHomepage from "./pages/publicHomePage";
 import UserHomepage from "./pages/userHomePage";
 import ConnectPage from "./pages/connectPage";
-import ProfilePage from "./pages/profilePage";
+import StudentProfilePage from "./pages/studentProfilePage"; 
+import SponsorProfilePage from "./pages/sponsorProfilePage"; 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PublicNavbar from "./components/PublicNavbar";
 import UserNavbar from "./components/UserNavbar";
-
 
 const App = () => {
   return (
@@ -22,13 +22,14 @@ const App = () => {
 const AppContent = () => {
   const { user, loading } = useContext(AuthContext);
 
-  // Use effect does not need to handle navigation. It's better to handle navigation inside the Routes.
+  // Handle loading state
   if (loading) return <div>Loading...</div>;
 
   return (
     <>
       {user ? <UserNavbar /> : <PublicNavbar />}
       <Routes>
+        {/* Routes for unauthenticated users */}
         {!user ? (
           <>
             <Route path="/" element={<PublicHomepage />} />
@@ -38,10 +39,18 @@ const AppContent = () => {
           </>
         ) : (
           <>
+            {/* Routes for authenticated users */}
             <Route path="/" element={<UserHomepage />} />
             <Route path="*" element={<Navigate to="/" />} />
             <Route path="/connect" element={<ConnectPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            
+            {/* Conditional route for profile page */}
+            <Route
+              path="/profile"
+              element={
+                user.role === "student" ? <StudentProfilePage /> : <SponsorProfilePage />
+              }
+            />
           </>
         )}
       </Routes>

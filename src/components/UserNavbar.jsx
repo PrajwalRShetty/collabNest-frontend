@@ -19,7 +19,6 @@ const UserNavbar = () => {
   }, []);
 
   return (
-    <div className="bg-orange-700">
     <nav className="bg-black shadow-md px-2 py-2 flex items-center justify-between m-4 rounded-lg sticky top-0 z-50">
       {/* Left Section - Logo */}
       <div className="flex items-center space-x-2">
@@ -81,13 +80,13 @@ const UserNavbar = () => {
             <span className="text-2xl right-2 justify-end">☰</span>
           </button>
           {isNavDropdownOpen && (
-            <div className="absolute top-16 left-2 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
+            <div className="absolute top-16 left-2 mt-2 w-48 bg-black border border-gray-200 rounded-md shadow-lg">
               <NavLink
                 to="/home"
                 className={({ isActive }) =>
                   isActive
-                    ? "block px-4 py-2 text-black bg-gray-200"
-                    : "block px-4 py-2 text-black hover:bg-gray-100"
+                    ? "block px-4 py-2 text-orange-700 font-bold bg-gray-200"
+                    : "block px-4 py-2 text-white hover:text-orange-700 hover:bg-gray-100"
                 }
               >
                 Home
@@ -96,8 +95,8 @@ const UserNavbar = () => {
                 to="/projects"
                 className={({ isActive }) =>
                   isActive
-                    ? "block px-4 py-2 text-black bg-gray-200"
-                    : "block px-4 py-2 text-black hover:bg-gray-100"
+                    ? "block px-4 py-2 text-orange-700 font-bold bg-gray-200"
+                    : "block px-4 py-2 text-white hover:text-orange-700 hover:bg-gray-100"
                 }
               >
                 Projects
@@ -106,22 +105,24 @@ const UserNavbar = () => {
                 to="/connect"
                 className={({ isActive }) =>
                   isActive
-                    ? "block px-4 py-2 text-black bg-gray-200"
-                    : "block px-4 py-2 text-black hover:bg-gray-100"
+                    ? "block px-4 py-2 text-orange-700 font-bold bg-gray-200"
+                    : "block px-4 py-2  text-white hover:text-orange-700 hover:bg-gray-100"
                 }
               >
                 Connect
               </NavLink>
+              {user?.role === "student" && (
               <NavLink
                 to="/eduReels"
                 className={({ isActive }) =>
                   isActive
-                    ? "block px-4 py-2 text-black bg-gray-200"
-                    : "block px-4 py-2 text-black hover:bg-gray-100"
+                    ? "block px-4 py-2 text-orange-700 font-bold bg-gray-200"
+                    : "block px-4 py-2 text-white hover:text-orange-700 hover:bg-gray-100"
                 }
               >
                 EduReels
               </NavLink>
+              )}
             </div>
           )}
         </div>
@@ -182,7 +183,7 @@ const UserNavbar = () => {
         )}
       </div>
     </nav>
-    </div>
+
   );
 };
 

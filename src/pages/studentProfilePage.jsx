@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserProfile from "../components/UserProfile";
+import StudentProfile from "../components/StudentProfile";
 import Skills from "../components/Skills";
 import Projects from "../components/Projects";
 import axiosInstance from "../utils/axios";
@@ -13,8 +13,9 @@ const ProfilePage = () => {
     resources: [],
   }); // Separate state for the new skill
   const [projects, setProjects] = useState([]);
-  const [error, setError] = useState(null); // Error state for UI feedback
-  const [isLoading, setIsLoading] = useState(false); // Loading state for API calls
+  const [error, setError] = useState(null); 
+  const [isLoading, setIsLoading] = useState(false); 
+
 
   const updateProfile = async (updateData) => {
     try {
@@ -111,13 +112,11 @@ const ProfilePage = () => {
       console.error("Error updating skill:", error?.response?.data || error.message);
     }
   };
-  
-
 
   // Add a new project
   const addProject = async (project) => {
     try {
-      const response = await axiosInstance.post("/student/add-project", project);
+      const response = await axiosInstance.post("/student/project", project);
       if (response.status === 201) {
         // Update projects state directly instead of refetching profile
         setProjects((prevProjects) => [...prevProjects, response.data.project]);
@@ -128,6 +127,37 @@ const ProfilePage = () => {
       console.error("Error adding project:", error.response?.data || error.message);
     }
   };
+
+  const handleDeleteProject = async (projectId) => {
+    try {
+      const response = await axiosInstance.delete(`/student/project/${projectId}`);
+      if (response.status === 200) {
+        setProjects((prevProjects) => prevProjects.filter((project) => project._id !== projectId));
+        setError(null);
+      }
+    } catch (error) {
+      setError("Error deleting project");
+      console.error("Error deleting project:", error.response?.data || error.message);
+    }
+  };
+  
+  const handleUpdateProject = async (updatedProject) => {
+    try {
+      const response = await axiosInstance.put(`/student/project/${updatedProject._id}`, updatedProject);
+      if (response.status === 200 && response.data?.updatedProject) {
+        setProjects((prevProjects) =>
+          prevProjects.map((project) =>
+            project._id === updatedProject._id ? response.data.updatedProject : project
+          )
+        );
+        setError(null);
+      }
+    } catch (error) {
+      setError("Error updating project");
+      console.error("Error updating project:", error.response?.data || error.message);
+    }
+  };
+  
 
   useEffect(() => {
     fetchProfile();
@@ -142,19 +172,20 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-orange-500">
+    <div className="container mx-auto p-4">
       {/* Display error messages */}
       {error && <div className="text-red-500 text-center">{error}</div>}
 
       {/* User Profile Section */}
-      <UserProfile profile={profile} updateProfile={updateProfile} />
+      <StudentProfile profile={profile} updateProfile={updateProfile} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         {/* Skills Section */}
         <Skills skills={skills || []} addSkill={handleAddSkill} deleteSkill={handleDeleteSkill} updateSkill={handleUpdateSkill} newSkill={newSkill} setNewSkill={setNewSkill} />
 
         {/* Projects Section */}
-        <Projects projects={projects} addProject={addProject} />
+        <Projects projects={projects} addProject={addProject} deleteProject={handleDeleteProject} updateProject={handleUpdateProject}/>
+
       </div>
     </div>
   );
