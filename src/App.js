@@ -7,6 +7,7 @@ import ConnectPage from "./pages/connectPage";
 import StudentProfilePage from "./pages/studentProfilePage"; 
 import SponsorProfilePage from "./pages/sponsorProfilePage"; 
 import SponsorDashboard from "./pages/SponsorDashboard";
+import StudentDashboard from "./pages/StudentDashboard";
 import StudentProjects from "./pages/studentProjects";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -50,6 +51,7 @@ const AppContent = () => {
               <>
                 <Route path="/profile" element={<StudentProfilePage />} />
                 <Route path="/projects" element={<StudentProjects />} />
+                <Route path="/dashboard" element={<StudentDashboard />} />
               </>
             ) : (
               <>

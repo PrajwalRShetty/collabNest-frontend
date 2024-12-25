@@ -1,14 +1,14 @@
-// components/EnrolledStudents.jsx
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../utils/axios';
+import StudentProfileModal from './StudentProfileModal';
 
 const EnrolledStudents = ({ projectId, onClose }) => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedStudents, setSelectedStudents] = useState([]);
+  const [selectedProfile, setSelectedProfile] = useState(null);
 
-  // Fetch enrolled students
   useEffect(() => {
     const fetchEnrolledStudents = async () => {
       try {
@@ -26,23 +26,31 @@ const EnrolledStudents = ({ projectId, onClose }) => {
     fetchEnrolledStudents();
   }, [projectId]);
 
-  // Handle student selection
   const handleSelectStudent = async (studentId) => {
     try {
       await axiosInstance.post(`/sponsor/projects/${projectId}/select-student`, {
         studentId
       });
-      
-      // Update local state
+
       setSelectedStudents(prev => 
         prev.includes(studentId)
           ? prev.filter(id => id !== studentId)
           : [...prev, studentId]
       );
-      
+
       alert('Student selection updated successfully');
     } catch (err) {
       alert('Failed to update student selection');
+      console.error('Error:', err);
+    }
+  };
+
+  const handleViewProfile = async (studentId) => {
+    try {
+      const response = await axiosInstance.get(`/sponsor/student-profile/${studentId}`);
+      setSelectedProfile(response.data);
+    } catch (err) {
+      alert('Failed to load student profile');
       console.error('Error:', err);
     }
   };
@@ -68,41 +76,24 @@ const EnrolledStudents = ({ projectId, onClose }) => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {students.map((student) => (
-              <div
-                key={student._id}
-                className="border rounded-lg p-4 flex justify-between items-start"
-              >
+              <div key={student._id} className="border rounded-lg p-4 flex justify-between items-start">
                 <div>
                   <div className="flex items-center gap-3 mb-2">
                     {student.profileLogo && (
                       <img
                         src={student.profileLogo}
-                        alt={student.name}
+                        alt={student.userName}
                         className="w-12 h-12 rounded-full"
                       />
                     )}
                     <div>
-                      <h3 className="font-semibold">{student.name}</h3>
+                      <h3 className="font-semibold">{student.userName}</h3>
                       <p className="text-gray-600">{student.headline}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-2">
-                    <h4 className="font-semibold mb-1">Skills:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {student.skills.map((skill, index) => (
-                        <span
-                          key={index}
-                          className="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded"
-                        >
-                          {skill.skillName}
-                        </span>
-                      ))}
                     </div>
                   </div>
 
                   <button
-                    onClick={() => window.open(`/student-profile/${student._id}`, '_blank')}
+                    onClick={() => handleViewProfile(student.userId)}
                     className="mt-2 text-blue-600 hover:text-blue-800"
                   >
                     View Full Profile
@@ -124,6 +115,13 @@ const EnrolledStudents = ({ projectId, onClose }) => {
           </div>
         )}
       </div>
+
+      {selectedProfile && (
+        <StudentProfileModal
+          student={selectedProfile}
+          onClose={() => setSelectedProfile(null)}
+        />
+      )}
     </div>
   );
 };

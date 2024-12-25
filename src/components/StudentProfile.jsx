@@ -5,13 +5,13 @@ const StudentProfile = ({ profile, updateProfile }) => {
   const imageUrl = React.useMemo(() => {
     return profile.backgroundImage
       ? `${profile.backgroundImage}?t=${Date.now()}`
-      : "https://via.placeholder.com/800x200";
+      : "/bg-img.jpeg";
   }, [profile.backgroundImage]);
 
   const profileImageUrl = React.useMemo(() => {
     return profile.profileImage
       ? `${profile.profileImage}?t=${Date.now()}`
-      : "https://via.placeholder.com/150";
+      : "/profile.jpeg";
   }, [profile.profileImage]);
 
   const [modalView, setModalView] = useState(null);

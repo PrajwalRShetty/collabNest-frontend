@@ -112,7 +112,7 @@ const ConnectPage = () => {
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <img
-                      src={student.profileLogo || "https://via.placeholder.com/100"}
+                      src={student.profileLogo || "/profile.jpeg"}
                       alt="profile"
                       className="w-16 h-16 rounded-full"
                     />
