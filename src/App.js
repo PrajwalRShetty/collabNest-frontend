@@ -6,6 +6,10 @@ import UserHomepage from "./pages/userHomePage";
 import ConnectPage from "./pages/connectPage";
 import StudentProfilePage from "./pages/studentProfilePage"; 
 import SponsorProfilePage from "./pages/sponsorProfilePage"; 
+import ViewStudentProfile from "./pages/viewStudentProfile";
+// import ViewSponsorProfile from "./pages/viewSponsorProfile";
+import SponsorConnectPage from "./pages/sponsorConnect";
+import MyConnectionPage from "./pages/MyConnectionPage";
 import SponsorDashboard from "./pages/SponsorDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
 import StudentProjects from "./pages/studentProjects";
@@ -13,6 +17,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PublicNavbar from "./components/PublicNavbar";
 import UserNavbar from "./components/UserNavbar";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -44,18 +49,24 @@ const AppContent = () => {
           <>
             {/* Routes for authenticated users */}
             <Route path="/" element={<UserHomepage />} />
-            <Route path="/connect" element={<ConnectPage />} />
+            <Route path="/students/:studentId" element={<ViewStudentProfile />} />
+
+
             
             {/* Conditional routes based on user role */}
             {user.role === "student" ? (
               <>
                 <Route path="/profile" element={<StudentProfilePage />} />
                 <Route path="/projects" element={<StudentProjects />} />
+                <Route path="/connect" element={<ConnectPage />} />
                 <Route path="/dashboard" element={<StudentDashboard />} />
+                <Route path="/connections" element={<MyConnectionPage />} />
+                {/* <Route path="/sponsor-profile/:sponsorId" element={<ViewSponsorProfile/>}/> */}
               </>
             ) : (
               <>
                 <Route path="/profile" element={<SponsorProfilePage />} />
+                <Route path="/connect" element={<SponsorConnectPage />} />
                 <Route path="/dashboard" element={<SponsorDashboard />} />
               </>
             )}
@@ -64,6 +75,7 @@ const AppContent = () => {
           </>
         )}
       </Routes>
+      <Footer/>
     </>
   );
 };

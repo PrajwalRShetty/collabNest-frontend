@@ -8,12 +8,13 @@ const ContactInfo = ({ contactInfo, updateContactInfo, onClose }) => {
 
   const handleSubmit = () => {
     updateContactInfo(formData);
-    setIsEditing(false); // Close editing mode
+    setIsEditing(false);
   };
 
+  // Remove portfolio_link from the main fields array
   const fieldsToDisplay =
     user?.role === "student"
-      ? ["email", "phoneNo", "dob", "portfolio_link"]
+      ? ["email", "phoneNo", "dob"]  // Removed portfolio_link from here
       : ["email", "phoneNo"];
 
   return (
@@ -27,6 +28,7 @@ const ContactInfo = ({ contactInfo, updateContactInfo, onClose }) => {
               {formData[field] || "N/A"}
             </p>
           ))}
+          {/* Separate portfolio link display for students */}
           {user?.role === "student" && (
             <p>
               Portfolio:{" "}
@@ -39,16 +41,10 @@ const ContactInfo = ({ contactInfo, updateContactInfo, onClose }) => {
             </p>
           )}
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+            className="bg-orange-400 text-white px-4 py-2 rounded mt-4"
             onClick={() => setIsEditing(true)}
           >
             Edit Contact Info
-          </button>
-          <button
-            className="bg-gray-500 text-white px-4 py-2 rounded mt-4 ml-2"
-            onClick={onClose}
-          >
-            Back
           </button>
         </div>
       ) : (
@@ -65,6 +61,18 @@ const ContactInfo = ({ contactInfo, updateContactInfo, onClose }) => {
               }
             />
           ))}
+          {/* Separate portfolio input for students */}
+          {user?.role === "student" && (
+            <input
+              type="text"
+              placeholder="Portfolio Link"
+              className="border rounded p-2 w-full mb-2"
+              value={formData.portfolio_link || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, portfolio_link: e.target.value })
+              }
+            />
+          )}
           <div className="flex justify-end gap-2">
             <button
               onClick={handleSubmit}

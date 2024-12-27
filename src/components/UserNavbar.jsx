@@ -159,7 +159,7 @@ const UserNavbar = () => {
           className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center"
         >
           <img
-            src="https://via.placeholder.com/40"
+            src="/profile.jpeg"
             alt="Profile"
             className="w-full h-full object-cover rounded-full"
           />
@@ -186,6 +186,16 @@ const UserNavbar = () => {
               }
             >
               Dashboard
+            </NavLink>)}
+            {user.role === 'student' && (<NavLink
+              to="/connections"
+              className={({ isActive }) =>
+                isActive
+                  ? "block px-4 py-2 text-black bg-gray-200"
+                  : "block px-4 py-2 text-black hover:bg-gray-100"
+              }
+            >
+              My Connections
             </NavLink>)}
             <NavLink
               to="/settings"

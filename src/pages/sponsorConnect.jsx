@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../utils/axios";
 import { useNavigate } from 'react-router-dom';
 
-
-const ConnectPage = () => {
+const SponsorConnectPage = () => {
   const [students, setStudents] = useState([]); 
   const [searchName, setSearchName] = useState(""); 
   const [selectedSkills, setSelectedSkills] = useState([]); 
@@ -11,7 +10,7 @@ const ConnectPage = () => {
   const [loading, setLoading] = useState(false);
   const [searchAttempted, setSearchAttempted] = useState(false);
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     const fetchSkills = async () => {
       try {
@@ -28,13 +27,13 @@ const ConnectPage = () => {
     if (!searchName.trim() && selectedSkills.length === 0) {
       return;
     }  
-  
+
     setLoading(true);
     try {
       const queryParams = new URLSearchParams();
       if (searchName) queryParams.append("name", searchName);
       if (selectedSkills.length > 0) queryParams.append("skills", JSON.stringify(selectedSkills));
-  
+
       const response = await axios.get(`/student/search?${queryParams.toString()}`);
       setStudents(response.data);
     } catch (error) {
@@ -42,24 +41,6 @@ const ConnectPage = () => {
       alert("Failed to fetch students. Please try again.");
     } finally {
       setLoading(false);
-    }
-  };
-  
-  
-
-  const handleConnect = async (receiverId) => {
-    try {
-      await axios.post('/student/send-connection-request', { receiverId });
-      setStudents(students.map(student => {
-        if (student.userId._id === receiverId) {
-          return { ...student, connectionStatus: 'pending' };
-        }
-        return student;
-      }));
-      alert('Connection request sent successfully');
-    } catch (error) {
-      console.error("Error sending connection request:", error);
-      alert('Failed to send connection request');
     }
   };
 
@@ -72,38 +53,6 @@ const ConnectPage = () => {
     setSelectedSkills((prev) =>
       prev.includes(value) ? prev.filter((s) => s !== value) : [...prev, value]
     );
-  };
-
-  const renderConnectionButton = (student) => {
-    switch(student.connectionStatus) {
-      case 'connected':
-        return (
-          <button
-            onClick={() => handleViewProfile(student.userId._id)}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600 transition-colors"
-          >
-            View Profile
-          </button>
-        );
-      case 'pending':
-        return (
-          <button
-            disabled
-            className="mt-4 bg-gray-400 text-white px-4 py-2 rounded-lg w-full cursor-not-allowed"
-          >
-            Request Pending
-          </button>
-        );
-      default:
-        return (
-          <button
-            onClick={() => handleConnect(student.userId._id)}
-            className="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg w-full hover:bg-green-600 transition-colors"
-          >
-            Connect
-          </button>
-        );
-    }
   };
 
   return (
@@ -133,7 +82,7 @@ const ConnectPage = () => {
       {/* Main Section */}
       <div className="flex gap-4">
         {/* Left Sidebar - Filters */}
-        <div className="w-auto border rounded-lg p-4 h-fit bg-black text-white">
+        <div className="w-1/4 border rounded-lg p-4 h-fit bg-black text-white">
           <h2 className="text-lg font-bold mb-2 text-orange-500">Skills</h2>
           <div className="flex flex-col gap-2">
             {skills.map((skill, index) => (
@@ -181,7 +130,7 @@ const ConnectPage = () => {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-1">
-                  {student.skills.map((skill, index) => (
+                    {student.skills.map((skill, index) => (
                       <span
                         key={`${student._id}-${skill.skillName}-${index}`}
                         className="bg-gray-200 text-xs px-2 py-1 rounded-full"
@@ -190,7 +139,12 @@ const ConnectPage = () => {
                       </span>
                     ))}
                   </div>
-                  {renderConnectionButton(student)}
+                  <button
+                    onClick={() => handleViewProfile(student.userId._id)}
+                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg w-full hover:bg-blue-600 transition-colors"
+                  >
+                    View Profile
+                  </button>
                 </div>
               ))}
             </div>
@@ -203,4 +157,4 @@ const ConnectPage = () => {
   );
 };
 
-export default ConnectPage;
+export default SponsorConnectPage;

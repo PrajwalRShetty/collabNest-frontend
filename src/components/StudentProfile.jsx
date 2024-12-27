@@ -23,6 +23,7 @@ const StudentProfile = ({ profile, updateProfile }) => {
     contactInfo: profile.contactInfo || {},
     backgroundImage: profile.backgroundImage || "",
     profileImage: profile.profileImage || "",
+    connectionCount: profile.connectionCount || 0
   });
 
   // Sync form data with profile props
@@ -32,6 +33,7 @@ const StudentProfile = ({ profile, updateProfile }) => {
       headline: profile.headline || "",
       education: profile.education || "",
       location: profile.location || "",
+      connectionCount:profile.connectionCount,
       contactInfo: profile.contactInfo || {},
       backgroundImage: profile.backgroundImage || "",
       profileImage: profile.profileImage || "",
@@ -56,6 +58,7 @@ const StudentProfile = ({ profile, updateProfile }) => {
         headline: formData.headline,
         education: formData.education,
         location: formData.location,
+        connectionCount: formData.connectionCount,
       },
     };
     updateProfile(updateData);
@@ -179,10 +182,9 @@ const StudentProfile = ({ profile, updateProfile }) => {
             <p>{profile.education || "Education"}</p>
             <p>{profile.location || "Location"}</p>
             
-            {/* Connection Count in an Oval */}
             <div className="flex items-center mt-4 space-x-2">
               <div className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">
-                {profile.connections ? profile.connections.length : 0} connections
+              {formData.connectionCount || 0} connections
               </div>
             </div>
 

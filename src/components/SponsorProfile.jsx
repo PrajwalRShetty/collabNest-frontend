@@ -18,7 +18,6 @@ const ProjectSponsorProfile = ({ profile, updateProfile }) => {
   const [modalView, setModalView] = useState(null);
   const [formData, setFormData] = useState({
     name: profile.name || "",
-    headline: profile.headline || "",
     bio: profile.bio || "",
     location: profile.location || "",
     contactInfo: profile.contactInfo || {},
@@ -30,8 +29,7 @@ const ProjectSponsorProfile = ({ profile, updateProfile }) => {
   useEffect(() => {
     if (profile) {
       setFormData({
-        name: profile.name || "",
-        headline: profile.headline || "", 
+        name: profile.name || "", 
         bio: profile.bio || "",
         location: profile.location || "",
         contactInfo: profile.contactInfo || {},
@@ -56,7 +54,6 @@ const ProjectSponsorProfile = ({ profile, updateProfile }) => {
       section: "basic-info",
       data: {
         name: formData.name,
-        headline: formData.headline,
         bio: formData.bio,
         location: formData.location,
       },
@@ -76,7 +73,6 @@ const ProjectSponsorProfile = ({ profile, updateProfile }) => {
     setModalView(null);
   };
 
-  // Handle Profile Image Change
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -178,15 +174,8 @@ const ProjectSponsorProfile = ({ profile, updateProfile }) => {
         <div className="p-4 flex items-start relative">
           <div className="ml-28 mt-2 w-full">
             <h2 className="text-lg font-bold">{profile?.name || "No Name Provided"}</h2>
-            <p>{profile.headline || "Headline"}</p>
+            <p>{profile.bio || "bio"}</p>
             <p>{profile.location || "Location"}</p>
-
-            {/* Connection Count in an Oval */}
-            <div className="flex items-center mt-4 space-x-2">
-              <div className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm">
-                {profile.connections ? profile.connections.length : 0} connections
-              </div>
-            </div>
 
             <div className="mt-4">
               <span
@@ -229,14 +218,6 @@ const ProjectSponsorProfile = ({ profile, updateProfile }) => {
                   value={formData.name}
                   onChange={handleBasicInfoChange}
                   placeholder="Name"
-                  className="w-full bg-gray-100 border border-gray-500 rounded px-4 py-2 text-black"
-                />
-                <input
-                  type="text"
-                  name="headline"
-                  value={formData.headline}
-                  onChange={handleBasicInfoChange}
-                  placeholder="Headline"
                   className="w-full bg-gray-100 border border-gray-500 rounded px-4 py-2 text-black"
                 />
                 <input

@@ -119,7 +119,7 @@ const Projects = ({ projects, addProject, updateProject, deleteProject }) => {
                 </span>
               ))}
             </div>
-            <p className="text-sm mt-2">Budget: {project.budget ? `$${project.budget}` : "Not provided"}</p>
+            <p className="text-sm mt-2">Budget: {project.budget ? `₹${project.budget}` : "Not provided"}</p>
             <p className="text-sm">Start Date: {new Date(project.startDate).toLocaleDateString()}</p>
             <p className="text-sm">End Date: {new Date(project.endDate).toLocaleDateString()}</p>
             <p className="text-sm">Application Deadline: {new Date(project.applicationDeadline).toLocaleDateString()}</p>
@@ -156,7 +156,7 @@ const Projects = ({ projects, addProject, updateProject, deleteProject }) => {
           />
           <input
             type="number"
-            placeholder="Budget"
+            placeholder=" ₹Budget"
             className="border rounded p-2 w-full mb-2"
             value={editProject ? editProject.budget : newProject.budget}
             onChange={(e) =>

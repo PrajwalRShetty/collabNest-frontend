@@ -26,34 +26,73 @@ const StudentDashboard = () => {
     fetchProjects();
   }, []);
 
-  if (loading) return <div>Loading projects...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-red-500 text-lg font-semibold bg-red-50 px-6 py-4 rounded-lg">
+        Error: {error}
+      </div>
+    </div>
+  );
 
   return (
-    <div className="p-6">
+    <div className="max-w-7xl mx-auto p-6 space-y-8">
       {/* Selected Projects Section */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Selected Projects</h2>
+      <section className="bg-white rounded-xl shadow-sm p-6">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">
+          Selected Projects
+        </h2>
         {projects.selectedProjects.length === 0 ? (
-          <p>No selected projects yet.</p>
+          <p className="text-gray-500 text-center py-8 bg-gray-50 rounded-lg">
+            No selected projects yet.
+          </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {projects.selectedProjects.map((project) => (
-              <div key={project.projectId} className="border rounded-lg p-4 shadow-sm bg-white">
-                <h3 className="text-xl font-semibold">{project.title}</h3>
-                <p className="text-gray-600 text-sm mb-2">By {project.sponsorName}</p>
-                <p className="mb-2">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-2">
+              <div 
+                key={project.projectId} 
+                className="border rounded-xl p-6 hover:shadow-md transition-shadow duration-300 bg-gray-50"
+              >
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  {project.title}
+                </h3>
+                <p className="text-gray-600 text-sm mb-3 flex items-center">
+                  <span className="mr-2">
+                    🏢
+                  </span>
+                  {project.sponsorName}
+                </p>
+                <p className="mb-4 text-gray-700">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
                   {project.skillsRequired?.map((skill, index) => (
-                    <span key={index} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
+                    <span 
+                      key={index} 
+                      className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm font-medium"
+                    >
                       {skill}
                     </span>
                   ))}
                 </div>
-                <div className="text-sm text-gray-600">
-                  <p>Start Date: {new Date(project.startDate).toLocaleDateString()}</p>
-                  <p>End Date: {new Date(project.endDate).toLocaleDateString()}</p>
-                  <p>Project-Status: <span className="capitalize">{project.status}</span></p>
+                <div className="text-sm space-y-2 text-gray-600 border-t pt-4">
+                  <p className="flex justify-between">
+                    <span className="font-medium">Start Date:</span>
+                    <span>{new Date(project.startDate).toLocaleDateString()}</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span className="font-medium">End Date:</span>
+                    <span>{new Date(project.endDate).toLocaleDateString()}</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span className="font-medium">Project Status:</span>
+                    <span className="capitalize text-green-600 font-medium">
+                      {project.status}
+                    </span>
+                  </p>
                 </div>
               </div>
             ))}
@@ -62,35 +101,60 @@ const StudentDashboard = () => {
       </section>
 
       {/* Applied Projects Section */}
-      <section>
-        <h2 className="text-2xl font-bold mb-4">Applied Projects</h2>
+      <section className="bg-white rounded-xl shadow-sm p-6">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">
+          Applied Projects
+        </h2>
         {projects.appliedProjects.length === 0 ? (
-          <p>No applications yet.</p>
+          <p className="text-gray-500 text-center py-8 bg-gray-50 rounded-lg">
+            No applications yet.
+          </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {projects.appliedProjects.map((project) => (
-              <div key={project.projectId} className="border rounded-lg p-4 shadow-sm bg-white">
-                <h3 className="text-xl font-semibold">{project.title}</h3>
-                <p className="text-gray-600 text-sm mb-2">By {project.sponsorName}</p>
-                <p className="mb-2">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-2">
+              <div 
+                key={project.projectId} 
+                className="border rounded-xl p-6 hover:shadow-md transition-shadow duration-300 bg-gray-50"
+              >
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  {project.title}
+                </h3>
+                <p className="text-gray-600 text-sm mb-3 flex items-center">
+                  <span className="mr-2">
+                    🏢
+                  </span>
+                  {project.sponsorName}
+                </p>
+                <p className="mb-4 text-gray-700">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mb-4">
                   {project.skillsRequired?.map((skill, index) => (
-                    <span key={index} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
+                    <span 
+                      key={index} 
+                      className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm font-medium"
+                    >
                       {skill}
                     </span>
                   ))}
                 </div>
-                <div className="text-sm text-gray-600">
-                  <p>Applied Date: {new Date(project.appliedDate).toLocaleDateString()}</p>
-                  <p>Application Status: 
-                    <span className={`capitalize ml-1 font-medium
-                      ${project.status === 'accepted' ? 'text-green-600' : 
-                        project.status === 'rejected' ? 'text-red-600' : 
-                        'text-yellow-600'}`}>
+                <div className="text-sm space-y-2 text-gray-600 border-t pt-4">
+                  <p className="flex justify-between">
+                    <span className="font-medium">Applied Date:</span>
+                    <span>{new Date(project.appliedDate).toLocaleDateString()}</span>
+                  </p>
+                  <p className="flex justify-between">
+                    <span className="font-medium">Status:</span>
+                    <span className={`capitalize font-medium ${
+                      project.status === 'accepted' ? 'text-green-600' : 
+                      project.status === 'rejected' ? 'text-red-600' : 
+                      'text-yellow-600'
+                    }`}>
                       {project.status}
                     </span>
                   </p>
-                  <p>Deadline: {new Date(project.applicationDeadline).toLocaleDateString()}</p>
+                  <p className="flex justify-between">
+                    <span className="font-medium">Deadline:</span>
+                    <span>{new Date(project.applicationDeadline).toLocaleDateString()}</span>
+                  </p>
                 </div>
               </div>
             ))}

@@ -62,7 +62,7 @@ const SponsorDashboard = () => {
                 Status: {project.status}
               </p>
               <p className="text-gray-700">
-                Enrolled Students: {project.enrolledStudents.length-1}</p>
+                Enrolled Students: {project.enrolledStudents.length}</p>
               <p className="text-gray-700">
                 Selected Students: {project.selectedStudents.length}
               </p>
