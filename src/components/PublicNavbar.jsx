@@ -9,11 +9,11 @@ const PublicNavbar = () => {
     <nav className="bg-black px-4 py-3 flex justify-between items-center">
      <div className="flex items-center space-x-2">
         <img
-          src="https://via.placeholder.com/40"
+          src="/swapskillLogo.jpeg"
           alt="App Logo"
           className="w-8 h-8 object-cover rounded-full"
         />
-      <div className="text-white font-bold ">SwapSkill</div>
+      <div className="text-white font-bold ">CollabNest</div>
       </div>
       <button
         className="bg-orange-800 text-white px-4 py-2 rounded"

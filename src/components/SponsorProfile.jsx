@@ -9,10 +9,10 @@ const ProjectSponsorProfile = ({ profile, updateProfile }) => {
   }, [profile.backgroundImage]);
 
   const profileImageUrl = React.useMemo(() => {
-    return profile.profileImage
-      ? `${profile.profileImage}?t=${Date.now()}`
+    return profile.profileLogo
+      ? `${profile.profileLogo}?t=${Date.now()}`
       : "/profile.jpeg";
-  }, [profile.profileImage]);
+  }, [profile.profileLogo]);
 
 
   const [modalView, setModalView] = useState(null);
@@ -77,8 +77,8 @@ const ProjectSponsorProfile = ({ profile, updateProfile }) => {
     const file = e.target.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append("profileImage", file);
-      formData.append("section", "profile-image");
+      formData.append("profileLogo", file);
+      formData.append("section", "profile-logo");
       updateProfile(formData);
     }
     setModalView(null);

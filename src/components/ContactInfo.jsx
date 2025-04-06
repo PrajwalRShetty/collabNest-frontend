@@ -11,10 +11,10 @@ const ContactInfo = ({ contactInfo, updateContactInfo, onClose }) => {
     setIsEditing(false);
   };
 
-  // Remove portfolio_link from the main fields array
+ 
   const fieldsToDisplay =
     user?.role === "student"
-      ? ["email", "phoneNo", "dob"]  // Removed portfolio_link from here
+      ? ["email", "phoneNo", "dob"] 
       : ["email", "phoneNo"];
 
   return (

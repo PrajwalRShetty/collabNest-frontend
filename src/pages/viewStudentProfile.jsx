@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from '../utils/axios';
 
 const ViewStudentProfile = () => {
-  const { studentId } = useParams(); // Gets the studentId from the URL
+  const { studentId } = useParams(); 
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ const ViewStudentProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`/student/profile/${studentId}`);
+        const response = await axios.get(`/students/profile/${studentId}`);
         setProfile(response.data);
       } catch (err) {
         setError('Failed to fetch profile');

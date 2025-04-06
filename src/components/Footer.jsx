@@ -41,8 +41,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-bold mb-4">Contact Us</h3>
             <ul className="space-y-2 text-gray-400">
-              <li>Email: support@swapskill.com</li>
-              <li>Phone: (123) 456-7890</li>
+              <li>Email: prajwalrshetty2005@gmail.com</li>
               <li>Address: SCEM,Adyar</li>
             </ul>
           </div>
@@ -81,7 +80,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} SkillMatch. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} CollabNest. All rights reserved.</p>
         </div>
       </div>
     </footer>

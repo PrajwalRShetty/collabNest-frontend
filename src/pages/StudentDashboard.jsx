@@ -13,7 +13,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axiosInstance.get('/student/projects');
+        const response = await axiosInstance.get('/students/projects');
         setProjects(response.data);
       } catch (err) {
         setError('Failed to fetch projects');

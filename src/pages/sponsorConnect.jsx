@@ -14,7 +14,7 @@ const SponsorConnectPage = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get("/student/skills");
+        const response = await axios.get("/students/skills");
         setSkills(response.data);
       } catch (error) {
         console.error("Error fetching skills:", error);
@@ -34,7 +34,7 @@ const SponsorConnectPage = () => {
       if (searchName) queryParams.append("name", searchName);
       if (selectedSkills.length > 0) queryParams.append("skills", JSON.stringify(selectedSkills));
 
-      const response = await axios.get(`/student/search?${queryParams.toString()}`);
+      const response = await axios.get(`/students?${queryParams.toString()}`);
       setStudents(response.data);
     } catch (error) {
       console.error("Error fetching students:", error);

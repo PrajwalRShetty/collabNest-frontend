@@ -23,11 +23,11 @@ const UserNavbar = () => {
       {/* Left Section - Logo */}
       <div className="flex items-center space-x-2">
         <img
-          src="https://via.placeholder.com/40"
+          src="/swapskillLogo.jpeg"
           alt="App Logo"
           className="w-8 h-8 object-cover rounded-full"
         />
-        <span className="text-xl font-bold text-white">SwapSkill</span>
+        <span className="text-xl font-bold text-white">CollabNest</span>
       </div>
 
       {/* Center Section - Nav Links */}
@@ -58,7 +58,7 @@ const UserNavbar = () => {
           >
             Connect
           </NavLink>
-          {user?.role === "student" && (
+          {/* {user?.role === "student" && (
             <NavLink
               to="/eduReels"
               className={({ isActive }) =>
@@ -67,7 +67,7 @@ const UserNavbar = () => {
             >
               EduReels
             </NavLink>
-          )}
+          )} */}
           {user?.role === "projectSponsor" && (
             <NavLink
               to="/dashboard"
@@ -124,7 +124,7 @@ const UserNavbar = () => {
               >
                 Connect
               </NavLink>
-              {user?.role === "student" && (
+              {/* {user?.role === "student" && (
               <NavLink
                 to="/eduReels"
                 className={({ isActive }) =>
@@ -135,7 +135,7 @@ const UserNavbar = () => {
               >
                 EduReels
               </NavLink>
-              )}
+              )} */}
               {user.role === 'projectSponsor' && (
               <NavLink
                 to="/dashboard"
@@ -166,13 +166,13 @@ const UserNavbar = () => {
         </button>
 
         {isDropdownOpen && (
-          <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 rounded-md shadow-lg">
+          <div className="absolute right-0 mt-2 w-auto bg-white border border-gray-200 rounded-md shadow-lg">
             <NavLink
               to="/profile"
               className={({ isActive }) =>
                 isActive
                   ? "block px-4 py-2 text-black bg-gray-200"
-                  : "block px-4 py-2 text-black hover:bg-gray-100"
+                  : "block px-4 py-2 text-black hover:bg-gray-300"
               }
             >
               Profile
@@ -182,7 +182,7 @@ const UserNavbar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "block px-4 py-2 text-black bg-gray-200"
-                  : "block px-4 py-2 text-black hover:bg-gray-100"
+                  : "block px-4 py-2 text-black hover:bg-gray-300"
               }
             >
               Dashboard
@@ -192,23 +192,23 @@ const UserNavbar = () => {
               className={({ isActive }) =>
                 isActive
                   ? "block px-4 py-2 text-black bg-gray-200"
-                  : "block px-4 py-2 text-black hover:bg-gray-100"
+                  : "block px-4 py-2 text-black hover:bg-gray-300"
               }
             >
-              My Connections
+              MyConnections
             </NavLink>)}
             <NavLink
               to="/settings"
               className={({ isActive }) =>
                 isActive
                   ? "block px-4 py-2 text-black bg-gray-200"
-                  : "block px-4 py-2 text-black hover:bg-gray-100"
+                  : "block px-4 py-2 text-black hover:bg-gray-300"
               }
             >
               Settings
             </NavLink>
             <NavLink
-              className="block px-4 py-2 text-red-600 hover:bg-gray-100"
+              className="block px-4 py-2 text-red-600 hover:bg-gray-300"
               onClick={logout}
             >
               Logout

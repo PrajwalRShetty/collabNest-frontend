@@ -12,7 +12,7 @@ const EnrolledStudents = ({ projectId, onClose }) => {
   useEffect(() => {
     const fetchEnrolledStudents = async () => {
       try {
-        const response = await axiosInstance.get(`/sponsor/projects/${projectId}/enrolled-students`);
+        const response = await axiosInstance.get(`/sponsor/projects/${projectId}/students`);
         setStudents(response.data.students);
         setSelectedStudents(response.data.selectedStudents || []);
       } catch (err) {
@@ -28,7 +28,7 @@ const EnrolledStudents = ({ projectId, onClose }) => {
 
   const handleSelectStudent = async (studentId) => {
     try {
-      await axiosInstance.post(`/sponsor/projects/${projectId}/select-student`, {
+      await axiosInstance.post(`/sponsor/projects/${projectId}/students`, {
         studentId
       });
 
@@ -47,7 +47,7 @@ const EnrolledStudents = ({ projectId, onClose }) => {
 
   const handleViewProfile = async (studentId) => {
     try {
-      const response = await axiosInstance.get(`/sponsor/student-profile/${studentId}`);
+      const response = await axiosInstance.get(`/sponsor/students/${studentId}`);
       setSelectedProfile(response.data);
     } catch (err) {
       alert('Failed to load student profile');

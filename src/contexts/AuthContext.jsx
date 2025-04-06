@@ -7,12 +7,12 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const fetchUser = async () => {
         try {
-          const response = await axios.get("auth/user-info");
+          const response = await axios.get("auth/users/me");
           if (response.data?.user) {
             setUser(response.data.user);
             Cookies.set("user", JSON.stringify(response.data.user), { expires: 7 });
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post("auth/logout");
+            await axios.delete("auth/sessions");
             setUser(null);
             Cookies.remove("user");
             navigate("/login");

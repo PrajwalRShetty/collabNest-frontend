@@ -15,7 +15,7 @@ const ConnectPage = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get("/student/skills");
+        const response = await axios.get("/students/skills");
         setSkills(response.data);
       } catch (error) {
         console.error("Error fetching skills:", error);
@@ -35,7 +35,7 @@ const ConnectPage = () => {
       if (searchName) queryParams.append("name", searchName);
       if (selectedSkills.length > 0) queryParams.append("skills", JSON.stringify(selectedSkills));
   
-      const response = await axios.get(`/student/search?${queryParams.toString()}`);
+      const response = await axios.get(`/students?${queryParams.toString()}`);
       setStudents(response.data);
     } catch (error) {
       console.error("Error fetching students:", error);
@@ -49,7 +49,7 @@ const ConnectPage = () => {
 
   const handleConnect = async (receiverId) => {
     try {
-      await axios.post('/student/send-connection-request', { receiverId });
+      await axios.post('/students/connections', { receiverId });
       setStudents(students.map(student => {
         if (student.userId._id === receiverId) {
           return { ...student, connectionStatus: 'pending' };

@@ -19,7 +19,7 @@ const MyConnectionPage = () => {
 
   const fetchConnectionRequests = async () => {
     try {
-      const response = await axios.get('/student/connection-requests');
+      const response = await axios.get('/students/connections/pending');
       setConnectionRequests(response.data);
     } catch (err) {
       setError('Failed to fetch connection requests');
@@ -31,7 +31,7 @@ const MyConnectionPage = () => {
 
   const fetchConnectedStudents = async () => {
     try {
-      const response = await axios.get('/student/connected-students');
+      const response = await axios.get('/students/connections');
       setConnectedStudents(response.data);
     } catch (err) {
       console.error('Error fetching connected students:', err);
@@ -41,8 +41,7 @@ const MyConnectionPage = () => {
 
   const handleRequest = async (requestId, action) => {
     try {
-      await axios.post('/student/handle-connection-request', {
-        requestId,
+      await axios.put(`/students/connections/${requestId}`, {
         action
       });
       
@@ -62,7 +61,7 @@ const MyConnectionPage = () => {
 
   const handleRemoveConnection = async (studentId) => {
     try {
-      await axios.post('/student/remove-connection', { studentId });
+      await axios.delete(`/students/connections/${studentId}`);
       fetchConnectedStudents();
       alert('Connection removed successfully');
     } catch (err) {

@@ -35,6 +35,7 @@ const AppContent = () => {
 
   return (
     <>
+    <div className="flex flex-col min-h-screen">
       {user ? <UserNavbar /> : <PublicNavbar />}
       <Routes>
         {/* Routes for unauthenticated users */}
@@ -76,6 +77,7 @@ const AppContent = () => {
         )}
       </Routes>
       <Footer/>
+      </div>
     </>
   );
 };

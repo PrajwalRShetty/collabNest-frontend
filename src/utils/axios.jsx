@@ -9,8 +9,6 @@ instance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
-    // Skip if the request has the "No-Auth" header
     if (originalRequest.headers["No-Auth"]) {
       return Promise.reject(error);
     }
@@ -19,7 +17,7 @@ instance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await instance.post("auth/refresh-token");
+        await instance.post("auth/tokens");
         console.log("Token refreshed successfully");
         return instance(originalRequest);
       } catch (err) {
@@ -34,4 +32,4 @@ instance.interceptors.response.use(
 );
 
   
-export default instance;
+export default instance;

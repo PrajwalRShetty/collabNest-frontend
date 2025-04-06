@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
   const updateProfile = async (updateData) => {
     try {
-      const response = await axiosInstance.put("/student/update-profile", updateData, {
+      const response = await axiosInstance.put("/students/update-profile", updateData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -42,7 +42,7 @@ const ProfilePage = () => {
   const fetchProfile = async () => {
     try {
       setIsLoading(true);
-      const response = await axiosInstance.get("/student/profile");
+      const response = await axiosInstance.get("/students/profile");
       setProfile(response.data.profile);
       setSkills(response.data.profile.skills);
       setProjects(response.data.profile.projects);
@@ -57,7 +57,7 @@ const ProfilePage = () => {
 
   const handleAddSkill = async (skillData) => {
     try {
-      const response = await axiosInstance.post("/student/skills", {
+      const response = await axiosInstance.post("/students/skills", {
         skillName: skillData.skillName,
         learningPath: skillData.learningPath,
         resources: skillData.resources
@@ -75,7 +75,7 @@ const ProfilePage = () => {
   
   const handleDeleteSkill = async (skillName) => {
     try {
-      const response = await axiosInstance.delete(`/student/skills`, {
+      const response = await axiosInstance.delete(`/students/skills`, {
         data: { skillName }
       });
   
@@ -93,7 +93,7 @@ const ProfilePage = () => {
 
   const handleUpdateSkill = async (updatedSkill) => {
     try {
-      const response = await axiosInstance.put("/student/skills", updatedSkill);
+      const response = await axiosInstance.put("/students/skills", updatedSkill);
   
       if (response.status === 200 && response.data?.updatedSkill) {
         // Update the skills list after a successful update
@@ -116,7 +116,7 @@ const ProfilePage = () => {
   // Add a new project
   const addProject = async (project) => {
     try {
-      const response = await axiosInstance.post("/student/project", project);
+      const response = await axiosInstance.post("/students/project", project);
       if (response.status === 201) {
         // Update projects state directly instead of refetching profile
         setProjects((prevProjects) => [...prevProjects, response.data.project]);
@@ -130,7 +130,7 @@ const ProfilePage = () => {
 
   const handleDeleteProject = async (projectId) => {
     try {
-      const response = await axiosInstance.delete(`/student/project/${projectId}`);
+      const response = await axiosInstance.delete(`/students/project/${projectId}`);
       if (response.status === 200) {
         setProjects((prevProjects) => prevProjects.filter((project) => project._id !== projectId));
         setError(null);
@@ -143,7 +143,7 @@ const ProfilePage = () => {
   
   const handleUpdateProject = async (updatedProject) => {
     try {
-      const response = await axiosInstance.put(`/student/project/${updatedProject._id}`, updatedProject);
+      const response = await axiosInstance.put(`/students/project/${updatedProject._id}`, updatedProject);
       if (response.status === 200 && response.data?.updatedProject) {
         setProjects((prevProjects) =>
           prevProjects.map((project) =>

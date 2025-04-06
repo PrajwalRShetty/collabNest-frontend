@@ -61,15 +61,15 @@ const PublicHomepage = () => {
     margin: "60px",
   };
 
-  const buttonStyle = {
-    backgroundColor: "#3BB4A1",
-    color: "white",
-    border: "none",
-    padding: "12px 24px",
-    fontSize: "1rem",
-    cursor: "pointer",
-    transition: "background-color 0.3s ease",
-  };
+  // const buttonStyle = {
+  //   backgroundColor: "#3BB4A1",
+  //   color: "white",
+  //   border: "none",
+  //   padding: "12px 24px",
+  //   fontSize: "1rem",
+  //   cursor: "pointer",
+  //   transition: "background-color 0.3s ease",
+  // };
 
   const imageStyle = {
     position: "absolute",
@@ -91,55 +91,50 @@ const PublicHomepage = () => {
     marginBottom: "40px",
   };
 
-  const handleButtonClick = () => {
-    // Handle button click event
-    console.log("Button clicked!");
-  };
+  // const handleButtonClick = () => {
+  //   // Handle button click event
+  //   console.log("Button clicked!");
+  // };
 
   return (
     <div style={containerStyle}>
       <div style={containerStyle}>
         <div>
-          <img src={"/1.png"} alt="Above Image" style={imageStyle} />
+          <img src={"/1.png"} alt="" style={imageStyle} />
           <div style={titleContainerStyle}>
-            <h1 style={titleStyle}>SWAPSKILL</h1>
+            <h1 style={titleStyle}>CollabNest</h1>
           </div>
-          <img src={"/2.png"} alt="Below Image" style={imageBelowStyle} />
+          <img src={"/2.png"} alt="" style={imageBelowStyle} />
         </div>
       </div>
-      <h2 style={contentTitleStyle}>Why use SwapSkill?</h2>
+      <h2 style={contentTitleStyle}>Why to use CollabNest?</h2>
       <div id="why-skill-swap" style={textContainer}>
         <div style={descriptionStyle}>
-          At SwapSkill, we believe in the power of mutual learning and collaboration. Here's why SwapSkill is the
-          ultimate platform for skill acquisition and knowledge exchange:
+        At CollabNest, we bridge the gap between learning and real-world experience by connecting students with project sponsors, innovators, and peers for hands-on collaboration and continuous skill development.
           <br />
           <br />
           <br />
-          <h4 style={{ color: "#F08080" }}>➊ Learn From Experts:</h4> Gain insights and practical knowledge directly
-          from experienced mentors who excel in their respective fields. Whether it's mastering a new programming
-          language, honing your culinary skills, or delving into the world of digital marketing, our mentors are here to
-          guide you every step of the way.
+          <h4 style={{ color: "#F08080" }}>➊Real-World Projects, Real Impact </h4>
+          CollabNest empowers students to apply their knowledge by working on real-world projects posted by businesses, startups, and innovators. 
+          It’s more than just learning—it's about solving real challenges and building a portfolio that matters.
           <br />
           <br />
-          <h4 style={{ color: "#F08080" }}>➋ Share Your Expertise:</h4> Have a skill or passion you're eager to share?
-          SwapSkill provides a platform for you to become a mentor yourself. Share your expertise with others, foster a
-          sense of community, and contribute to the growth of aspiring learners.
+          <h4 style={{ color: "#F08080" }}>➋ Skill Exchange Community</h4> Students can share their learning paths, 
+          including the tools and resources they used to gain skills. By connecting with peers, they can explore diverse approaches
+           and learn from each other’s experiences.
           <br />
           <br />
-          <h4 style={{ color: "#F08080" }}>➌ Collaborative Environment:</h4> Our community thrives on collaboration.
-          Connect with like-minded individuals, participate in group projects, and engage in discussions that fuel
-          creativity and innovation. SwapSkill isn't just about individual growth—it's about collective advancement.
+          <h4 style={{ color: "#F08080" }}>➌  Build, Lead, Innovate</h4> Students don’t just participate—they lead. 
+          CollabNest enables students to act as project sponsors too, pitching their own ideas, forming teams, and managing projects.
+           It’s a place to innovate, lead, and grow.
           <br />
           <br />
-          <h4 style={{ color: "#F08080" }}>➍ Diverse Learning Opportunities:</h4> With SwapSkill, the possibilities are
-          endless and <b>free of cost</b>. Explore a wide range of topics and disciplines, from traditional crafts to
-          cutting-edge technologies. Our diverse library of skills ensures there's something for everyone, regardless of
-          your interests or background.
+          <h4 style={{ color: "#F08080" }}>➍A Thriving Collaborative Ecosystem</h4> CollabNest is designed for mutual growth. 
+          Project sponsors get skilled contributors; students gain practical experience.
+           Together, they form a vibrant ecosystem where collaboration, creativity, and continuous improvement thrive.
           <br />
           <br />
-          <h4 style={{ color: "#F08080" }}>➎ Continuous Growth:</h4> Learning is a lifelong journey, and SwapSkill is
-          here to support you every step of the way. Whether you're a novice or a seasoned professional, our platform
-          empowers you to continuously expand your knowledge, challenge yourself, and embrace new opportunities.
+    
         </div>
       </div>
     </div>

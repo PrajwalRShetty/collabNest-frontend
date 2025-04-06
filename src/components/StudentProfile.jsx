@@ -5,14 +5,14 @@ const StudentProfile = ({ profile, updateProfile }) => {
   const imageUrl = React.useMemo(() => {
     return profile.backgroundImage
       ? `${profile.backgroundImage}?t=${Date.now()}`
-      : "/bg-img.jpeg";
+      : `/bg-img.jpeg`;
   }, [profile.backgroundImage]);
 
   const profileImageUrl = React.useMemo(() => {
-    return profile.profileImage
-      ? `${profile.profileImage}?t=${Date.now()}`
+    return profile.profileLogo
+      ? `${profile.profileLogo}?t=${Date.now()}`
       : "/profile.jpeg";
-  }, [profile.profileImage]);
+  }, [profile.profileLogo]);
 
   const [modalView, setModalView] = useState(null);
   const [formData, setFormData] = useState({
@@ -81,8 +81,8 @@ const StudentProfile = ({ profile, updateProfile }) => {
     const file = e.target.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append("profileImage", file);
-      formData.append("section", "profile-image");
+      formData.append("profileLogo", file);
+      formData.append("section", "logo");
       updateProfile(formData);
     }
     setModalView(null);

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../utils/axios';
 
 const StudentProjects = () => {
-  const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +15,7 @@ const StudentProjects = () => {
   const fetchProjects = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get('/student/available-projects');
+      const response = await axiosInstance.get('/students/available-projects');
       if (response.data && response.data.projects) {
         console.log('Fetched projects:', response.data.projects);
         setProjects(response.data.projects);
@@ -33,7 +31,7 @@ const StudentProjects = () => {
 
   const handleApply = async (projectId) => {
     try {
-      await axiosInstance.post(`/student/apply-project/${projectId}`);
+      await axiosInstance.post(`/students/apply-project/${projectId}`);
       setProjects(projects.map(project => 
         project._id === projectId 
           ? { ...project, hasApplied: true }
