@@ -1,5 +1,5 @@
 import React, { useState,useContext } from "react";
-import axiosInstance from "../utils/axios";
+import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -15,7 +15,7 @@ const Signup = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post("/auth/users", { name, email, password, role },{ headers: { "No-Auth": true } });
+      const response = await axios.post("/auth/users", { name, email, password, role },{ headers: { "No-Auth": true } });
       console.log("Signup successful:", response.data); 
       signup(response.data.user);
       
