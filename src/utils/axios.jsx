@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:8000/v1/api", 
+  baseURL: "https://collabnest-backend.onrender.com/v1/api", 
   withCredentials: true,
 });
 
