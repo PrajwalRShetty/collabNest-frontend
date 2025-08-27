@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import AuthProvider, { AuthContext } from "./contexts/AuthContext";
 import PublicHomepage from "./pages/publicHomePage";
 import UserHomepage from "./pages/userHomePage";
@@ -15,23 +15,36 @@ import StudentDashboard from "./pages/StudentDashboard";
 import StudentProjects from "./pages/studentProjects";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import NotFound from "./pages/NotFound";
 import PublicNavbar from "./components/PublicNavbar";
 import UserNavbar from "./components/UserNavbar";
 import Footer from "./components/Footer";
+import ErrorBoundary from "./components/ErrorBoundary";
+import DebugInfo from "./components/DebugInfo";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 };
 
 const AppContent = () => {
   const { user, loading } = useContext(AuthContext);
 
-  // Handle loading state
-  if (loading) return <div>Loading...</div>;
+  console.log('App render - Loading:', loading, 'User:', user ? 'Authenticated' : 'Not authenticated');
+
+  // Handle loading state with a proper loading component
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -44,7 +57,7 @@ const AppContent = () => {
             <Route path="/" element={<PublicHomepage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<NotFound />} />
           </>
         ) : (
           <>
@@ -72,11 +85,12 @@ const AppContent = () => {
               </>
             )}
 
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<NotFound />} />
           </>
         )}
       </Routes>
       <Footer/>
+      <DebugInfo/>
       </div>
     </>
   );

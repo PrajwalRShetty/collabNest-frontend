@@ -16,10 +16,14 @@ export const AuthProvider = ({ children }) => {
           if (response.data?.user) {
             setUser(response.data.user);
             Cookies.set("user", JSON.stringify(response.data.user), { expires: 7 });
+          } else {
+            setUser(null);
           }
         } catch (err) {
           console.error("Error fetching user:", err.message);
           setUser(null);
+          // Clear any stale cookies if user fetch fails
+          Cookies.remove("user");
         } finally {
           setLoading(false);
         }
@@ -54,8 +58,15 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const storedUser = Cookies.get("user");
         if (storedUser) {
-            setUser(JSON.parse(storedUser));
-            setLoading(false);
+            try {
+                setUser(JSON.parse(storedUser));
+                setLoading(false);
+            } catch (err) {
+                console.error("Error parsing stored user:", err);
+                Cookies.remove("user");
+                setUser(null);
+                setLoading(false);
+            }
         } else {
             fetchUser();
         }
