@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post("/auth/sessions", { email, password, role },{ headers: { "No-Auth": true } });
-      login(response.data.user); 
+      login(response.data.user, response.data.tokens); 
     } catch (err) {
       setError("Invalid credentials");
     }

@@ -17,7 +17,7 @@ const Signup = () => {
     try {
       const response = await axios.post("/auth/users", { name, email, password, role },{ headers: { "No-Auth": true } });
       console.log("Signup successful:", response.data); 
-      signup(response.data.user);
+      signup(response.data.user, response.data.tokens);
       
     } catch (err) {
       setError("User already exists or error occurred");
