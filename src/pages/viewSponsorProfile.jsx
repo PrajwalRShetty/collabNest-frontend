@@ -15,7 +15,7 @@ const ViewSponsorProfile = () => {
       try {
         const [profileRes, projectsRes] = await Promise.all([
           axios.get(`/sponsor/profile/${sponsorId}`),
-          axios.get(`/sponsor/${sponsorId}/projects`)
+          axios.get(`/sponsor/projects/${sponsorId}`)
         ]);
         setProfile(profileRes.data);
         setProjects(projectsRes.data.projects);
