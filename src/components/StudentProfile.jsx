@@ -51,17 +51,16 @@ const StudentProfile = ({ profile, updateProfile }) => {
 
   // Submit basic info
   const handleBasicInfoSubmit = () => {
-    const updateData = {
-      section: "basic-info",
-      data: {
-        name: formData.name,
-        headline: formData.headline,
-        education: formData.education,
-        location: formData.location,
-        connectionCount: formData.connectionCount,
-      },
-    };
-    updateProfile(updateData);
+    const formDataToSend = new FormData();
+    formDataToSend.append("section", "basic-info");
+    formDataToSend.append("data", JSON.stringify({
+      name: formData.name,
+      headline: formData.headline,
+      education: formData.education,
+      location: formData.location,
+      connectionCount: formData.connectionCount,
+    }));
+    updateProfile(formDataToSend);
     setModalView(null);
   };
 
@@ -94,11 +93,10 @@ const StudentProfile = ({ profile, updateProfile }) => {
       ...prev,
       contactInfo: newContactInfo,
     }));
-    const updateData = {
-      section: "contact-info",
-      data: newContactInfo,
-    };
-    updateProfile(updateData);
+    const formDataToSend = new FormData();
+    formDataToSend.append("section", "contact-info");
+    formDataToSend.append("data", JSON.stringify(newContactInfo));
+    updateProfile(formDataToSend);
     setModalView(null);
   };
 
