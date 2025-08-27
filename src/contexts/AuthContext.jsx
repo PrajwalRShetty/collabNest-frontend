@@ -12,15 +12,21 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = async () => {
         try {
+          console.log('AuthContext: Attempting to fetch user data...');
           const response = await axios.get("auth/users/me");
           if (response.data?.user) {
+            console.log('AuthContext: User data fetched successfully');
             setUser(response.data.user);
             Cookies.set("user", JSON.stringify(response.data.user), { expires: 7 });
           } else {
+            console.log('AuthContext: No user data in response');
             setUser(null);
           }
         } catch (err) {
-          console.error("Error fetching user:", err.message);
+          console.error("AuthContext: Error fetching user:", err.message);
+          if (err.response?.status === 401) {
+            console.log('AuthContext: User not authenticated, setting user to null');
+          }
           setUser(null);
           // Clear any stale cookies if user fetch fails
           Cookies.remove("user");
