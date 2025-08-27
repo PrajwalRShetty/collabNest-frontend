@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axiosInstance from '../utils/axios';
 
 const StudentProjects = () => {
@@ -179,12 +180,17 @@ const StudentProjects = () => {
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
-                  <span>{project.sponsorName}</span>
+                  <Link 
+                    to={`/sponsors/${project.sponsorId}`}
+                    className="text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                  >
+                    {project.sponsorName}
+                  </Link>
                 </div>
               </div>
             </div>
 
-            <div className="px-6 pb-6">
+            <div className="px-6 pb-6 space-y-2">
             <button
               onClick={() => handleApply(project._id)}
               disabled={project.hasApplied}
@@ -196,6 +202,13 @@ const StudentProjects = () => {
             >
               {project.hasApplied ? 'Applied' : 'Apply Now'}
             </button>
+            
+            <Link 
+              to={`/sponsors/${project.sponsorId}`}
+              className="block w-full py-2.5 px-4 rounded-lg font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 text-center transition-all duration-200"
+            >
+              View Sponsor Profile
+            </Link>
           </div>
           </div>
         ))}

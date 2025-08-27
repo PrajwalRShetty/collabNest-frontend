@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from 'react-router-dom';
-import AuthTest from "../components/AuthTest";
 
 const UserHomepage = () => {
   const { user } = useContext(AuthContext);
@@ -34,11 +33,6 @@ const UserHomepage = () => {
               </button>
             </div>
           </div>
-        </div>
-        
-        {/* Temporary Auth Test Component */}
-        <div className="container mx-auto px-4 mt-8">
-          <AuthTest />
         </div>
       </section>
 

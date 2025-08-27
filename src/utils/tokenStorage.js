@@ -8,7 +8,6 @@ class TokenStorage {
             if (refreshToken) {
                 localStorage.setItem('refreshToken', refreshToken);
             }
-            console.log('Tokens stored in localStorage');
         } catch (error) {
             console.error('Error storing tokens:', error);
         }
@@ -36,7 +35,6 @@ class TokenStorage {
         try {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
-            console.log('Tokens cleared from localStorage');
         } catch (error) {
             console.error('Error clearing tokens:', error);
         }

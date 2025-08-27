@@ -7,7 +7,7 @@ import ConnectPage from "./pages/connectPage";
 import StudentProfilePage from "./pages/studentProfilePage"; 
 import SponsorProfilePage from "./pages/sponsorProfilePage"; 
 import ViewStudentProfile from "./pages/viewStudentProfile";
-// import ViewSponsorProfile from "./pages/viewSponsorProfile";
+import ViewSponsorProfile from "./pages/viewSponsorProfile";
 import SponsorConnectPage from "./pages/sponsorConnect";
 import MyConnectionPage from "./pages/MyConnectionPage";
 import SponsorDashboard from "./pages/SponsorDashboard";
@@ -34,8 +34,6 @@ const App = () => {
 
 const AppContent = () => {
   const { user, loading } = useContext(AuthContext);
-
-  console.log('App render - Loading:', loading, 'User:', user ? 'Authenticated' : 'Not authenticated');
 
   // Handle loading state with a proper loading component
   if (loading) {
@@ -64,6 +62,7 @@ const AppContent = () => {
             {/* Routes for authenticated users */}
             <Route path="/" element={<UserHomepage />} />
             <Route path="/students/:studentId" element={<ViewStudentProfile />} />
+            <Route path="/sponsors/:sponsorId" element={<ViewSponsorProfile />} />
 
 
             

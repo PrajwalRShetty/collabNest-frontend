@@ -13,19 +13,14 @@ const instance = axios.create({
 // Add request interceptor to add Authorization header
 instance.interceptors.request.use(
   (config) => {
-    console.log('Making request to:', config.url);
-    console.log('With credentials:', config.withCredentials);
-    
     // Skip auth header for No-Auth requests
     if (!config.headers["No-Auth"]) {
       const accessToken = TokenStorage.getAccessToken();
       if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
-        console.log('Added Authorization header');
       }
     }
     
-    console.log('Headers:', config.headers);
     return config;
   },
   (error) => {
@@ -68,7 +63,6 @@ instance.interceptors.response.use(
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
       // Check if we've exceeded max refresh attempts
       if (refreshAttempts >= MAX_REFRESH_ATTEMPTS) {
-        console.log('Max refresh attempts exceeded, redirecting to login');
         if (window.location.pathname !== '/login' && window.location.pathname !== '/signup') {
           window.location.href = "/login";
         }
@@ -90,8 +84,6 @@ instance.interceptors.response.use(
       refreshAttempts++;
 
       try {
-        console.log(`Token refresh attempt ${refreshAttempts}/${MAX_REFRESH_ATTEMPTS}`);
-        
         // Get refresh token from storage
         const refreshToken = TokenStorage.getRefreshToken();
         if (!refreshToken) {
@@ -103,8 +95,6 @@ instance.interceptors.response.use(
           refreshToken: refreshToken 
         });
         
-        console.log("Token refreshed successfully");
-        
         // Store new access token
         if (refreshResponse.data.accessToken) {
           TokenStorage.setTokens(refreshResponse.data.accessToken, refreshToken);
@@ -113,7 +103,6 @@ instance.interceptors.response.use(
         processQueue(null);
         return instance(originalRequest);
       } catch (err) {
-        console.error("Token refresh failed:", err.message);
         processQueue(err, null);
         
         // Clear invalid tokens
