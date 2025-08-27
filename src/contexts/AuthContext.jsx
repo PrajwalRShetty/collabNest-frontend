@@ -61,7 +61,10 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.delete("auth/sessions");
+            const refreshToken = TokenStorage.getRefreshToken();
+            await axios.delete("auth/sessions", {
+                data: { refreshToken }
+            });
             setUser(null);
             Cookies.remove("user");
             TokenStorage.clearTokens();
